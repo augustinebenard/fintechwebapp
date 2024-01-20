@@ -41,7 +41,7 @@ export default function Header({ toggle }: PropType) {
   );
 
   return (
-    <section className="sticky flex justify-between top-0 h-18 lg:h-20 w-full py-4 px-4 bg-white z-40 shadow">
+    <section className="flex justify-between top-0 h-18 lg:h-20 w-full py-4 px-4 bg-white z-40 shadow">
       <div className="flex my-auto">
         <div
           onClick={toggle}
