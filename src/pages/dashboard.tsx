@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import SideNav from "../components/Sidebar";
 import Header from "../components/Header";
 import useToggle from "../components/useToggle";
@@ -17,19 +17,28 @@ import {
 import ToggleCustom from "../components/Toggle";
 import Button from "../components/Button";
 import { emptyState as empty } from "../assets/images";
+import Pagination from "../components/Pagination";
 
 const Dashboard = () => {
   const [show, toggle] = useToggle();
 
   const users = useSelector((state: any) => state.users);
   console.log(users);
+  const [pageNumber, setPageNumber] = useState(1);
+
+  // useEffect(() => {
+  
+
+  //   // if (loanApplicationError) {
+  //   //   toast.error(loanApplicationError.message);
+  //   // }
+  //   // if (totalLoanApplicationError) {
+  //   //   toast.error(totalLoanApplicationError.message);
+  //   // }
+  // }, [pageNumber]);
 
   return (
-    <div className="flex">
-      <SideNav show={show} toggle={toggle} />
-      <div className="w-full overflow-x-hidden bg-gray-100">
-        <Header show={show} toggle={toggle} />
-
+ 
         <div className="px-6 py-4">
           <h1 className="text-4xl mb-7 font-bold">
             Welcome Back, <span className="text-primary-800">{"John Doe"}</span>
@@ -90,10 +99,10 @@ const Dashboard = () => {
             </div>
 
             <div className="p-6 bg-secondary-600 text-white border border-primary-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-              <span className="text-sm font-bold ">Acoount Number</span>
+              <span className="text-sm font-bold ">Acount Number</span>
               <div className="flex justify-between gap-5">
                 <div className="">
-                  <div className="w-full text-5xl tracking-normal  font-bold my-1">
+                  <div className="w-full text-4xl tracking-normal  font-bold my-1">
                     {"00321234212"}
                   </div>
                 </div>
@@ -109,6 +118,13 @@ const Dashboard = () => {
             </div>
           </div>
 
+          <h1 className="text-4xl my-7 font-bold">
+            <span className="text-primary-800">Transaction History</span>
+          </h1>
+
+          <h1 className="text-4xl my-7 font-bold">
+            <span className="text-primary-800">Users</span>
+          </h1>
           <div className="mt-8 flow-root">
             <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8 min-h-[80vh]">
               <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
@@ -131,14 +147,21 @@ const Dashboard = () => {
                         scope="col"
                         className="px-3 py-3.5 text-left text-xs font-bold text-surfaceVariant-neutral30"
                       >
-                        Role
+                        Account Number
                       </th>
                       <th
                         scope="col"
                         className="px-3 py-3.5 text-left text-xs font-bold text-surfaceVariant-neutral30"
                       >
-                        Phone Number
+                        Account Balance
                       </th>
+                      <th
+                        scope="col"
+                        className="px-3 py-3.5 text-left text-xs font-bold text-surfaceVariant-neutral30"
+                      >
+                        Role
+                      </th>
+                    
                       <th
                         scope="col"
                         className="px-3 py-3.5 text-left text-xs font-bold text-surfaceVariant-neutral30"
@@ -158,14 +181,22 @@ const Dashboard = () => {
                             <td className="whitespace-nowrap px-3 py-4 text-xs text-surfaceVariant-neutral30">
                               {request.email}
                             </td>
+                            <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-surfaceVariant-neutral30 ">
+                              {request.accountNumber}
+                            </td>
+                            <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-surfaceVariant-neutral30 ">
+                              {request.walletBalance}
+                            </td>
                             <td className="whitespace-nowrap px-3 py-4 text-xs text-surfaceVariant-neutral30">
                               {request.role}
                             </td>
+                        
                             <td className="whitespace-nowrap px-3 py-4 text-xs text-surfaceVariant-neutral30">
-                              {request.phone}
-                            </td>
-                            <td className="whitespace-nowrap px-3 py-4 text-xs text-surfaceVariant-neutral30">
-                              <ToggleCustom check={request.status} />
+                        {request.active ? (
+                          <div className="text-green-600 font-semibold">Active</div>
+                        ) : (
+                          <div className="text-red-600 font-semibold">Active</div>
+                        )}
                             </td>
                           </tr>
                         ))}
@@ -192,9 +223,11 @@ const Dashboard = () => {
               </div>
             </div>
           </div>
+
+          {/* <Pagination total={users?.length} setPageNumber={setPageNumber} /> */}
+
         </div>
-      </div>
-    </div>
+
   );
 };
 

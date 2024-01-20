@@ -3,7 +3,7 @@ import { dataList } from "./data";
 
  const userSlice = createSlice({
     name: "users",
-    initialState: [],
+    initialState: dataList,
     reducers:{
         
     }

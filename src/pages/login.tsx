@@ -21,7 +21,7 @@ const Login = () => {
 
       const handleSubmit = (e: React.ChangeEvent<HTMLFormElement>) => {
           e.preventDefault();
-          router('/dashboard')
+          router('/app/dashboard')
         }
        
 

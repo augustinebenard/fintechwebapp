@@ -7,6 +7,7 @@
     role: "Admin",
     active: true,
     createdAt: "2024-01-01",
+    accountNumber: "1234567890",
     walletBalance: 100000,
     transactionHistory:[
         {
@@ -33,8 +34,9 @@
     username: "sammy",
     email: "samyjames@gmail.com",
     role: "User",
-    active: true,
+    active: false,
     createdAt: "2024-01-01",
+    accountNumber: "1234567890",
     walletBalance: 100000,
     transactionHistory:[
         {
