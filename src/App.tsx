@@ -5,7 +5,8 @@ import Login from "./pages/login";
 import Dashboard from "./pages/dashboard";
 import UserManagement from "./pages/users";
 import Layout from "./components/layout";
-
+import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -13,6 +14,7 @@ function App() {
   return (
     <>
       <BrowserRouter>
+      <ToastContainer />
         <Routes>
           <Route path="/" element={<Login />} />
           

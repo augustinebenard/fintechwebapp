@@ -11,9 +11,11 @@ import {
 } from "@heroicons/react/20/solid";
 import { v4 as uuidv4 } from 'uuid';
 import { IRole, User } from "../../model/user.model";
-const AddUser = ({ refetchData }: any) => {
- 
+import { addUser } from "../../redux/userReducer";
+import { useDispatch } from "react-redux";
 
+const AddUser = ({ refetchData }: any) => {
+const dispatch = useDispatch();
   const [isAddUserModalOpen, setIsAddUserModalOpen] = useState(false);
 
   const roles = [
@@ -54,6 +56,7 @@ const AddUser = ({ refetchData }: any) => {
     const value = event.target.value;
     setUser({ ...user, [event.target.name]: value });
   };
+
   const saveUser = async (e: any) => {
     e.preventDefault();
     setIsSubmitting(true);
@@ -69,7 +72,7 @@ const AddUser = ({ refetchData }: any) => {
     walletBalance: 0,
     transactionHistory: [],
   }
-console.log(savedUser);
+  dispatch(addUser(savedUser));
 
    
     setIsSubmitting(false);

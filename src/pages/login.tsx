@@ -21,7 +21,11 @@ const Login = () => {
 
       const handleSubmit = (e: React.ChangeEvent<HTMLFormElement>) => {
           e.preventDefault();
-          router('/app/dashboard')
+          if(username === "" || password === ""){
+            return toast.error("Please fill in all fields");
+          }
+          // router('/app/dashboard')
+          toast.success("Login Successful");
         }
        
 

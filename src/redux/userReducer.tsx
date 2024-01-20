@@ -5,8 +5,11 @@ import { dataList } from "./data";
     name: "users",
     initialState: dataList,
     reducers:{
-        
+        addUser: (state, action) => {
+            state.push(action.payload);
+            
+        }
     }
     })
-
+export const { addUser } = userSlice.actions;
     export default userSlice.reducer;
