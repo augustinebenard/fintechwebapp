@@ -5,12 +5,8 @@ import App from './App';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import userReducer from './redux/userReducer';
+import store from './redux/store';
 
-const store = configureStore({
-  reducer: {
-    users: userReducer,
-  },
-});
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
