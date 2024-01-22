@@ -11,8 +11,8 @@ import {
 } from "@heroicons/react/20/solid";
 import { v4 as uuidv4 } from 'uuid';
 import { IRole, User } from "../../model/user.model";
-import { addUser } from "../../redux/userReducer";
 import { useDispatch } from "react-redux";
+import { addUser } from "../../redux/user.slice";
 
 const AddUser = ({ refetchData }: any) => {
 const dispatch = useDispatch();

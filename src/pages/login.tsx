@@ -7,13 +7,11 @@ import Input from "../components/Input";
 import Button from "../components/Button";
 import { Link, useNavigate, useNavigation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getLogin } from "../redux/actions";
+import { authActions } from "../redux/auth.slice";
 
 const Login = () => {
   const dispatch = useDispatch();
-  const users = useSelector((state: any) => state.users).users;
-  console.log(users);
-
+  const users = useSelector((state: any) => state.users);
   const router = useNavigate();
   const toastId = React.useRef(null) as any;
   const [form, setForm] = useState({ username: "", password: "" });
@@ -33,18 +31,17 @@ const Login = () => {
     // loop through the user and check if the username and password matches with any of the users
     users.forEach((user: any) => {
       if (user.username === username && user.password === password) {
-        dispatch(getLogin());
+        dispatch(authActions.login(user));
+        
         setIsLoading(true);
         router("/app/dashboard");
-        return  toast.success("Login Successful");
-        // if (!toast.isActive(toastId.current)) {
-        //   toastId.current = toast.success("Login Successful");
-        // }
+        if (!toast.isActive(toastId.current)) {
+          toastId.current = toast.success("Login Successful");
+        }
       } else {
-       return toast.error("Invalid Username or Password");
-        // if (!toast.isActive(toastId.current)) {
-        //   toastId.current = toast.error("Invalid Username or Password");
-        // }
+        if (!toast.isActive(toastId.current)) {
+          toastId.current = toast.error("Invalid Username or Password");
+        }
       }
     });
   };

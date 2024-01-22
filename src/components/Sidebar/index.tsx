@@ -1,24 +1,17 @@
-"use client";
-
 import React, { ReactElement } from "react";
-// import { usePathname } from "next/navigation";
-// import { logo } from "/assets/images";
 import { Link } from "react-router-dom";
 import { cn } from "../../lib/utils";
-// import Image from "next/image";
 import {
   Squares2X2Icon,
-  UserGroupIcon,
-  PencilSquareIcon,
   UserPlusIcon,
   ClipboardDocumentIcon,
-  LockClosedIcon,
   PowerIcon,
 } from "@heroicons/react/24/solid";
 import Button from "../Button";
-// import useAuth from "@/hooks/useAuth";
 import { useLocation } from "react-router-dom";
-import {herconomyLogo as logo} from '../../assets/images';
+import { herconomyLogo as logo } from "../../assets/images";
+import { useDispatch } from "react-redux";
+import { authActions } from "../../redux/auth.slice";
 type PropType = {
   show: boolean;
   toggle: () => void;
@@ -31,7 +24,7 @@ type Links = {
 };
 
 export default function SideNav({ show, toggle }: PropType) {
-  // const { logout } = useAuth();
+  const dispatch = useDispatch();
 
   const navLinks: Links[] = [
     {
@@ -53,7 +46,6 @@ export default function SideNav({ show, toggle }: PropType) {
 
   const pathname = useLocation().pathname;
   console.log(pathname);
-  
 
   return (
     <>
@@ -70,7 +62,7 @@ export default function SideNav({ show, toggle }: PropType) {
       >
         <div className="h-full  bg-current bg-primary-500">
           <div className="row z-10 top-0 px-3  py-8">
-          <img src={logo} alt="LoginImage" width={150} height={100} />
+            <img src={logo} alt="LoginImage" width={150} height={100} />
           </div>
           <div className="block  ">
             {navLinks?.map((link, index) => {
@@ -116,16 +108,14 @@ export default function SideNav({ show, toggle }: PropType) {
             })}
           </div>
         </div>
-        <div className="flex py-8 h-fit mx-auto">
-          <Button
-            // onClick={logout}
-            className=" bg-transparent cursor-pointer text-red-500 py-0 px-0 h-8"
-          >
-            <div className="flex">
-              <PowerIcon className="w-4 my-auto mr-2 text-red-600" />
-              Logout
+
+        <div className="logout_sidebar_button">
+          <a className="menu-link">
+            <div  onClick={() => dispatch(authActions.logout())} className="flex cursor-pointer py-4 items-center space-x-2">
+              <PowerIcon className="w-4 my-auto  text-red-600" />
+              <span className="sidebar-text-label font-[500] text-[16px] text-red-600">Logout</span>
             </div>
-          </Button>
+          </a>
         </div>
       </div>
     </>
