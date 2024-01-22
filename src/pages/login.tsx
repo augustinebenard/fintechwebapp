@@ -1,12 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { loginHeroImage as bank } from "../assets/images";
 import { herconomyLogoWhite as logo } from "../assets/images";
 import { herconomyLogo as logo2 } from "../assets/images";
 import Input from "../components/Input";
 import Button from "../components/Button";
-import { Link, useNavigate, useNavigation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { setLoggedInUserData } from "../redux/user.slice";
 import { authActions } from "../redux/auth.slice";
 
 const Login = () => {
@@ -17,6 +18,10 @@ const Login = () => {
   const [form, setForm] = useState({ username: "", password: "" });
   const { username, password } = form;
   const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    sessionStorage.clear();
+  }, []);
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({ ...form, [e.target.name]: e?.target?.value });
@@ -32,8 +37,7 @@ const Login = () => {
     users.forEach((user: any) => {
       if (user.username === username && user.password === password) {
         dispatch(authActions.login(user));
-        
-        setIsLoading(true);
+        dispatch(setLoggedInUserData(user));
         router("/app/dashboard");
         if (!toast.isActive(toastId.current)) {
           toastId.current = toast.success("Login Successful");

@@ -26,6 +26,7 @@ type Links = {
 export default function SideNav({ show, toggle }: PropType) {
   const dispatch = useDispatch();
 
+  const loggedInUser = JSON.parse(sessionStorage.getItem("loggedInUser") || "{}");
   const navLinks: Links[] = [
     {
       name: "Dashboard",
@@ -44,8 +45,12 @@ export default function SideNav({ show, toggle }: PropType) {
     },
   ];
 
+  // remove the manage users link if the logged in user is not an admin
+  if (loggedInUser?.loggedInUser?.role !== "Admin") {
+    navLinks.splice(2, 1);
+  }
+
   const pathname = useLocation().pathname;
-  console.log(pathname);
 
   return (
     <>
@@ -83,21 +88,15 @@ export default function SideNav({ show, toggle }: PropType) {
                       hover:bg-secondary-100 hover:font-[600] hover:text-secondary-500 ease-in-out duration-260 p-3 flex items-center`,
                       {
                         "bg-secondary-100 font-[600] text-secondary-500":
-                          pathname.toLowerCase().includes("customers") &&
-                          link.name.toLowerCase() === "customers",
+                          pathname.toLowerCase().includes("users") &&
+                          link.name.toLowerCase() === "manage users",
                       },
                       {
                         "bg-secondary-100 font-[600] text-secondary-500":
-                          pathname.toLowerCase().includes("loan-request") &&
-                          link.name.toLowerCase() === "loan request",
-                      },
-                      {
-                        "bg-secondary-100 font-[600] text-secondary-500":
-                          pathname
-                            .toLowerCase()
-                            .includes("loan-applications") &&
-                          link.name.toLowerCase() === "loan applications",
+                          pathname.toLowerCase().includes("transactions") &&
+                          link.name.toLowerCase() === "transactions",
                       }
+                    
                     )}
                   >
                     <div className="flex w-6 sm:w-8">{link?.icon}</div>
@@ -111,9 +110,14 @@ export default function SideNav({ show, toggle }: PropType) {
 
         <div className="logout_sidebar_button">
           <a className="menu-link">
-            <div  onClick={() => dispatch(authActions.logout())} className="flex cursor-pointer py-4 items-center space-x-2">
+            <div
+              onClick={() => dispatch(authActions.logout())}
+              className="flex cursor-pointer py-4 items-center space-x-2"
+            >
               <PowerIcon className="w-4 my-auto  text-red-600" />
-              <span className="sidebar-text-label font-[500] text-[16px] text-red-600">Logout</span>
+              <span className="sidebar-text-label font-[500] text-[16px] text-red-600">
+                Logout
+              </span>
             </div>
           </a>
         </div>

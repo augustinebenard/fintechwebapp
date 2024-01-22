@@ -1,45 +1,33 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Button from "../components/Button";
 import { emptyState as empty } from "../assets/images";
 import { UserPlusIcon } from "@heroicons/react/24/solid";
 import { useState } from "react";
 import AddUser from "../components/Modal/addUser";
-
+import { PencilSquareIcon, TrashIcon } from "@heroicons/react/20/solid";
+import { deleteUser } from "../redux/userList.slice";
 
 const UserManagement = () => {
   const users = useSelector((state: any) => state.users);
+  const dispatch = useDispatch();
+  const formatAmount = (amount: number) => {
+    return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ".00";
+  };
 
-
-  // const createUserHandler = async (event: React.FormEvent<HTMLFormElement>) => {
-  //   // setIsLoadingCreateUser(true);
-  //   event.preventDefault();
-  //   const payLoad = {
-  //     username: username,
-  //     roleId: role === "super_admin" ? 1 : 2,
-  //   };
-  //   try {
-  //     // const res = await AdminApis.createAdminUser(payLoad);
-  //   } catch (error) {
-  //     const errorMsg: any = error;
-
-  //     // toast.error(errorMsg?.message);
-  //   } finally {
-  //     setIsLoadingCreateUser(false);
-  //     closeCreateUserModal();
-  //   }
-  // };
-
+  const deleteUserById = (e: any, id: string) => {
+    e.preventDefault();
+    dispatch(deleteUser({ id }));
+  };
 
   return (
     <>
       <div className="px-6 py-4">
-        <h1 className="text-4xl my-7 font-bold">
+        <h1 className="text-4xl my-4 font-bold">
           <span className="text-primary-800">User Management</span>
         </h1>
-        <div className="mt-8 flow-root">
+        <div className="mt-4 flow-root">
           <div className="flex my-4 justify-end">
-        
-            <AddUser  />
+            <AddUser />
           </div>
           <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8 min-h-[80vh]">
             <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
@@ -51,6 +39,12 @@ const UserManagement = () => {
                       className="py-3.5 pl-4 pr-3 text-left text-xs font-bold text-surfaceVariant-neutral30 "
                     >
                       Full Name
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-3 py-3.5 text-left text-xs font-bold text-surfaceVariant-neutral30"
+                    >
+                      Username
                     </th>
                     <th
                       scope="col"
@@ -83,6 +77,12 @@ const UserManagement = () => {
                     >
                       Status
                     </th>
+                    <th
+                      scope="col"
+                      className="px-3 py-3.5 text-left text-xs font-bold text-surfaceVariant-neutral30"
+                    >
+                      Action
+                    </th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-Z79747E1A relative">
@@ -94,13 +94,16 @@ const UserManagement = () => {
                             {request.name}
                           </td>
                           <td className="whitespace-nowrap px-3 py-4 text-xs text-surfaceVariant-neutral30">
+                            {request.username}
+                          </td>
+                          <td className="whitespace-nowrap px-3 py-4 text-xs text-surfaceVariant-neutral30">
                             {request.email}
                           </td>
                           <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-surfaceVariant-neutral30 ">
                             {request.accountNumber}
                           </td>
                           <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs text-surfaceVariant-neutral30 ">
-                            {request.walletBalance}
+                            {formatAmount(request.walletBalance)}
                           </td>
                           <td className="whitespace-nowrap px-3 py-4 text-xs text-surfaceVariant-neutral30">
                             {request.role}
@@ -113,16 +116,37 @@ const UserManagement = () => {
                               </div>
                             ) : (
                               <div className="text-red-600 font-semibold">
-                                Active
+                                Inactive
                               </div>
                             )}
+                          </td>
+                          <td className="whitespace-nowrap px-3 py-4 text-xs text-surfaceVariant-neutral30">
+                            <div className="flex items-center space-x-2">
+                              <button
+                                onClick={(e) => deleteUserById(e, request.id)}
+                                className="flex items-center space-x-2"
+                              >
+                                <TrashIcon className="w-4 h-4 text-red-600" />
+                                <span className="text-red-600 font-semibold">
+                                  Delete
+                                </span>
+                              </button>
+                            </div>
                           </td>
                         </tr>
                       ))}
                     </>
                   ) : (
                     <div className="flex flex-col justify-center items-center absolute w-full">
-                      <div className="text-center">
+                      <div
+                        className="text-center"
+                        style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          justifyContent: "center",
+                          alignItems: "center",
+                        }}
+                      >
                         <img
                           src={empty}
                           alt="empty table"
@@ -134,7 +158,9 @@ const UserManagement = () => {
                           There are currently no users
                         </p>
                       </div>
-                      <Button className="my-10">Create New User</Button>
+                      <div className="my-6">
+                        <AddUser />
+                      </div>
                     </div>
                   )}
                 </tbody>
@@ -142,8 +168,6 @@ const UserManagement = () => {
             </div>
           </div>
         </div>
-
-
       </div>
     </>
   );

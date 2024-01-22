@@ -2,22 +2,21 @@
 
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useEffect, useState } from "react";
-import { Listbox } from "@headlessui/react";
 import {
-  CheckIcon,
-  ChevronUpDownIcon,
+  CheckCircleIcon,
+
   ExclamationCircleIcon,
   UserPlusIcon,
 } from "@heroicons/react/20/solid";
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
 import { IRole, User } from "../../model/user.model";
-import { useDispatch } from "react-redux";
-import { addUser } from "../../redux/user.slice";
+import { useDispatch, useSelector } from "react-redux";
+import { addUser } from "../../redux/userList.slice";
 
 const AddUser = ({ refetchData }: any) => {
-const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const [isAddUserModalOpen, setIsAddUserModalOpen] = useState(false);
-
+  const users = useSelector((state: any) => state.users);
   const roles = [
     { id: 2, name: "User" },
     { id: 3, name: "Admin" },
@@ -59,21 +58,42 @@ const dispatch = useDispatch();
 
   const saveUser = async (e: any) => {
     e.preventDefault();
+    setSuccessMessage({ type: "", message: "" });
     setIsSubmitting(true);
     setSuccess(false);
     setError(false);
-  // create User 
-  const savedUser:User = {
-    ...user,
-    id: uuidv4(),
-    createdAt: new Date().toISOString(),
-    active: true,
-    accountNumber: Math.floor(Math.random() * 10000000000).toString() ,
-    walletBalance: 0,
-    transactionHistory: [],
-  }
-  dispatch(addUser(savedUser));
 
+    // check if user already exist
+    const userExist = users.find(
+      (u: User) => u.email === user.email || u.username === user.username
+    );
+    if (userExist) {
+      setError(true);
+      setErrorMessage({
+        type: "Error",
+        message: "User with this email or Username already exist",
+      });
+      setIsSubmitting(false);
+      return;
+    }
+
+    // create User
+    const savedUser: User = {
+      ...user,
+      id: uuidv4(),
+      createdAt: new Date().toISOString(),
+      active: true,
+      accountNumber: Math.floor(Math.random() * 10000000000).toString(),
+      walletBalance: 0,
+      transactionHistory: [],
+    };
+    dispatch(addUser(savedUser));
+    setSuccess(true);
+    setSuccessMessage({ type: "Success", message: "User added successfully" });
+    reset(e);
+    setTimeout(() => {
+      closeAddUserModal()
+    }, 1000);
    
     setIsSubmitting(false);
   };
@@ -190,7 +210,7 @@ const dispatch = useDispatch();
 
                       <div className="my-4">
                         <label className="block mb-2 text-sm font-medium text-gray-300 dark:text-white">
-                       password
+                          password
                         </label>
                         <input
                           type="password"
@@ -207,7 +227,7 @@ const dispatch = useDispatch();
                           className="flex mt-2 items-center p-2 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 dark:border-red-800"
                           role="alert"
                         >
-                          <ExclamationCircleIcon />
+                          <ExclamationCircleIcon className="h-5 w-5 text-secondary-500" />
                           <span className="sr-only">{errorMessage.type}</span>
                           <div>
                             <span className="font-bold">
@@ -222,7 +242,7 @@ const dispatch = useDispatch();
                           className="flex mt-2 items-center p-2 text-sm text-green-800 border border-green-300 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400 dark:border-green-800"
                           role="alert"
                         >
-                          <i className="fa fa-check-circle mr-1"></i>
+                          <CheckCircleIcon className="h-5 w-5" />
                           <span className="sr-only">{"Success"}</span>
                           <div>
                             <span className="font-bold">{"Success"}!: </span>{" "}
@@ -236,7 +256,7 @@ const dispatch = useDispatch();
                           disabled={
                             user.email.length < 1 ||
                             user.name.length < 1 ||
-                            user.role.length < 1 || 
+                            user.role.length < 1 ||
                             user.username.length < 1 ||
                             submitting
                           }

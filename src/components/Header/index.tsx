@@ -3,7 +3,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { BellIcon } from "@heroicons/react/24/solid";
-// import useAuth from "@/hooks/useAuth";
+import { User } from "../../model/user.model";
 
 type PropType = {
   show: boolean;
@@ -17,18 +17,31 @@ export default function Header({ toggle }: PropType) {
   };
 
   const navLinks: Links[] = [
-    { name: "Dashboard", url: "/admin" },
-    { name: "Customers", url: "/admin/customers" },
-    { name: "Loan Request", url: "/admin/loan-request" },
-    { name: "Loan Application", url: "/admin/loan-applications" },
-    { name: "User Management", url: "/admin/user-management" },
+    { name: "Dashboard", url: "/app/dashboard" },
+    { name: "Transactions", url: "/app/transactions" },
+    { name: "Manage Users", url: "/app/users" },
   ];
 
+  const loggedInUser = JSON.parse(
+    sessionStorage.getItem("loggedInUser") || "{}"
+  )?.loggedInUser;
   const [userName, setUserName] = useState("");
   const [userInitials, setUserInitials] = useState("");
+  const getUserInitialsFromName = (name: string) => {
+    if (!name || name.split(" ").length === 1) {
+      return name[0];
+    }
+    const nameArray = name.split(" ");
+    const firstName = nameArray[0];
+    const lastName = nameArray[1];
+    return firstName[0] + lastName[0];
+  };
 
   const pathname = useLocation().pathname;
-  const { fullName, initials } = { fullName: "John Doe", initials: "JD"};
+  const { fullName, initials } = {
+    fullName: loggedInUser.name,
+    initials: getUserInitialsFromName(loggedInUser.name),
+  };
 
   useEffect(
     useCallback(() => {
@@ -69,7 +82,7 @@ export default function Header({ toggle }: PropType) {
             {navLinks?.map((link) => {
               const isActive: boolean = pathname === link.url;
               if (isActive) {
-                if (pathname === "/admin") {
+                if (pathname === "/app/dashboard") {
                   return `👋 Hello, ${userName?.toString().split(" ")[0]}`;
                 }
                 return link?.name;

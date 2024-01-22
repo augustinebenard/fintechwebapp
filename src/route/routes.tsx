@@ -3,6 +3,7 @@ import Layout from '../components/layout';
 import Dashboard from '../pages/dashboard';
 import UserManagement from '../pages/users';
 import Login from '../pages/login';
+import Transactions from '../pages/transactions';
 
 const routes = (isLoggedIn: boolean) => [
 
@@ -12,6 +13,7 @@ const routes = (isLoggedIn: boolean) => [
     children: [
       { path: 'dashboard', element: <Dashboard /> },
       { path: 'users', element: <UserManagement /> },
+      { path: 'transactions', element: <Transactions />},
       { path: '', element: <Navigate to="/app/dashboard" /> },
     ],
   },
