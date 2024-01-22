@@ -14,11 +14,14 @@ import AddUser from "../components/Modal/addUser";
 
 const Dashboard = () => {
   const users = useSelector((state: any) => state.users);
-  const getUserData = useSelector((state: any) => state.loggedInUser);
-  const user: User = getUserData?.data;
   const loggedInUser: User = JSON.parse(
     sessionStorage.getItem("loggedInUser") || "{}"
   )?.loggedInUser;
+
+  // return user if the logged in user is amonth the users
+
+  const user = users.find((user: any) => user.id === loggedInUser?.id);
+ 
   const transactions = user?.transactionHistory ?? [];
   const formatAmount = (amount: number) => {
     if (!amount) return "0.00";
@@ -41,7 +44,7 @@ const Dashboard = () => {
             </div>
           </div>
           <div className="w-full text-2xl font-bold my-4">
-            ₦{formatAmount(user?.walletBalance ?? 0)}
+            ₦{formatAmount(user?.walletBalance ?? 0) ?? formatAmount(loggedInUser.walletBalance ?? 0)}
           </div>
           <div className="flex gap-4">
             <FundWallet />

@@ -3,9 +3,18 @@ const initialState = {
   data: null,
 }
 
+const checkLoggedInUserFromSession = () => {
+  var loggedInUser = JSON.parse(sessionStorage.getItem("loggedInUser") || "{}").loggedInUser; 
+  console.log(loggedInUser);
+  
+  if (loggedInUser) {
+    return loggedInUser;
+  }
+  return initialState;
+};
 const userSlice = createSlice({
   name: "loggedInUser",
-  initialState: initialState,
+  initialState:  checkLoggedInUserFromSession(),
   reducers: {
     setLoggedInUserData(state, action) {
       state.data = action.payload;
