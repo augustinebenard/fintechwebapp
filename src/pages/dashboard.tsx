@@ -18,8 +18,6 @@ const Dashboard = () => {
     sessionStorage.getItem("loggedInUser") || "{}"
   )?.loggedInUser;
 
-  // return user if the logged in user is amonth the users
-
   const user = users.find((user: any) => user.id === loggedInUser?.id);
  
   const transactions = user?.transactionHistory ?? [];
