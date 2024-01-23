@@ -26,7 +26,7 @@ type Links = {
 export default function SideNav({ show, toggle }: PropType) {
   const dispatch = useDispatch();
 
-  const loggedInUser = JSON.parse(sessionStorage.getItem("loggedInUser") || "{}");
+  const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser") || "{}");
   const navLinks: Links[] = [
     {
       name: "Dashboard",

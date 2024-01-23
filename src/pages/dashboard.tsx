@@ -15,12 +15,12 @@ import AddUser from "../components/Modal/addUser";
 const Dashboard = () => {
   const users = useSelector((state: any) => state.users);
   const loggedInUser: User = JSON.parse(
-    sessionStorage.getItem("loggedInUser") || "{}"
+    localStorage.getItem("loggedInUser") || "{}"
   )?.loggedInUser;
 
   const user = users.find((user: any) => user.id === loggedInUser?.id);
  
-  const transactions = user?.transactionHistory ?? [];
+  const transactions =user?.transactionHistory || [];
   const formatAmount = (amount: number) => {
     if (!amount) return "0.00";
     return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ".00";

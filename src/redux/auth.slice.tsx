@@ -6,7 +6,7 @@ const initialState = {
 };
 
 const checkLoggedInUserFromSession = () => {
-  const loggedInUser = sessionStorage.getItem("loggedInUser");
+  const loggedInUser = localStorage.getItem("loggedInUser");
   if (loggedInUser) {
     return JSON.parse(loggedInUser);
   }
@@ -20,16 +20,16 @@ const authSlice = createSlice({
     login(state, action) {
       state.isLoggedIn = true;
       state.loggedInUser = action.payload;
-      sessionStorage.setItem("loggedInUser", JSON.stringify(state));
+      localStorage.setItem("loggedInUser", JSON.stringify(state));
     },
     logout(state) {
       state.loggedInUser = null;
       state.isLoggedIn = false;
-      sessionStorage.removeItem("loggedInUser");
+      localStorage.removeItem("loggedInUser");
     },
     updateLoggedInUser(state, action) {
       state.loggedInUser = action.payload;
-      sessionStorage.setItem("loggedInUser", JSON.stringify(state));
+      localStorage.setItem("loggedInUser", JSON.stringify(state));
     }
   },
 });

@@ -23,7 +23,7 @@ export default function Header({ toggle }: PropType) {
   ];
 
   const loggedInUser = JSON.parse(
-    sessionStorage.getItem("loggedInUser") || "{}"
+    localStorage.getItem("loggedInUser") || "{}"
   )?.loggedInUser;
   const [userName, setUserName] = useState("");
   const [userInitials, setUserInitials] = useState("");

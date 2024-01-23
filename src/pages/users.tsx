@@ -6,6 +6,8 @@ import { useState } from "react";
 import AddUser from "../components/Modal/addUser";
 import { PencilSquareIcon, TrashIcon } from "@heroicons/react/20/solid";
 import { deleteUser } from "../redux/userList.slice";
+import { User } from "../model/user.model";
+import { toast } from "react-toastify";
 
 const UserManagement = () => {
   const users = useSelector((state: any) => state.users);
@@ -13,10 +15,17 @@ const UserManagement = () => {
   const formatAmount = (amount: number) => {
     return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ".00";
   };
-
+  const loggedInUser: User = JSON.parse(
+    localStorage.getItem("loggedInUser") || "{}"
+  )?.loggedInUser;
+  const user = users.find((user: any) => user.id === loggedInUser?.id);
   const deleteUserById = (e: any, id: string) => {
     e.preventDefault();
+    if (id === user?.id) {
+      return toast.error("You cannot delete yourself");
+    }
     dispatch(deleteUser({ id }));
+    toast.success("User deleted successfully");
   };
 
   return (

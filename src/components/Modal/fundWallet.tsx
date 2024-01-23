@@ -9,8 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
 import { User } from "../../model/user.model";
 import { fundUserWallet } from "../../redux/userList.slice";
-import { authActions } from "../../redux/auth.slice";
-import { setLoggedInUserData } from "../../redux/user.slice";
+
 
 const FundWallet = () => {
   const users = useSelector((state: any) => state.users);
@@ -28,7 +27,7 @@ const FundWallet = () => {
     description: "",
   });
   const loggedInUser:User = JSON.parse(
-    sessionStorage.getItem("loggedInUser") || "{}"
+    localStorage.getItem("loggedInUser") || "{}"
   ).loggedInUser;
   const dispatch = useDispatch();
 
@@ -58,7 +57,7 @@ const FundWallet = () => {
     };
 
     dispatch(fundUserWallet(newUser));
-    dispatch(setLoggedInUserData(newUser));
+    // dispatch(setLoggedInUserData(newUser));
     // dispatch(authActions.updateLoggedInUser(newUser));
     setSuccess(true);
     setSuccessMessage({
