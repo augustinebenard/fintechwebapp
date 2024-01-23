@@ -1,6 +1,5 @@
 import { useSelector } from "react-redux";
 
-import { moneySaved2 as moneybag } from "../assets/images";
 import {
   BanknotesIcon,
   ClipboardDocumentCheckIcon,
