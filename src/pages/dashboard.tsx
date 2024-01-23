@@ -2,9 +2,11 @@ import { useSelector } from "react-redux";
 
 import { moneySaved2 as moneybag } from "../assets/images";
 import {
+  BanknotesIcon,
   ClipboardDocumentCheckIcon,
   ClipboardDocumentIcon,
   ClockIcon,
+  UserGroupIcon,
   UserPlusIcon,
 } from "@heroicons/react/24/solid";
 import Button from "../components/Button";
@@ -71,7 +73,7 @@ const DashboardTime = () => {
       <div className="grid grid-cols-1 xs:grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-5">
         <div className="p-6 bg-white border border-primary-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
           <div className="flex items-center space-x-4">
-            <img src={moneybag} alt="LoginImage" width={50} height={50} />
+            <BanknotesIcon color="#B30B15" width={50} height={50} />
             <div className="text-[#101828] font-medium text-base">
               Current Balance
             </div>
@@ -88,7 +90,7 @@ const DashboardTime = () => {
           <>
             <div className="p-6 bg-white border border-primary-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
               <div className="flex items-center space-x-4">
-                <img src={moneybag} alt="LoginImage" width={50} height={50} />
+              <UserGroupIcon color="#B30B15" width={50} height={50} />
                 <div className="text-[#101828] font-medium text-base">
                   Users
                 </div>

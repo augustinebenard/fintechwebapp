@@ -130,6 +130,8 @@ const TransferFund = () => {
         
       `,
     });
+    setFundPayload({ amount: "", description: "", accountNumber: "" });
+    setFoundUser(undefined);
     setTimeout(() => {
       closeModal();
     }, 1000);

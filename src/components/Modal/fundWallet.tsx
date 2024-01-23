@@ -62,11 +62,13 @@ const FundWallet = () => {
       type: "Success",
       message: "Wallet funded successfully",
     });
+    setFundPayload({ amount: "", description: "" });
     setTimeout(() => {
       closeModal();
     }, 1000);
   };
 
+  
   const closeModal = () => {
     setIsModalOpen(false);
   };

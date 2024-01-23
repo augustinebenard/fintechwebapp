@@ -12,6 +12,7 @@ import { v4 as uuidv4 } from "uuid";
 import { IRole, User } from "../../model/user.model";
 import { useDispatch, useSelector } from "react-redux";
 import { addUser } from "../../redux/userList.slice";
+import { toast } from "react-toastify";
 
 const AddUser = ({ refetchData }: any) => {
   const dispatch = useDispatch();
@@ -62,7 +63,6 @@ const AddUser = ({ refetchData }: any) => {
     setIsSubmitting(true);
     setSuccess(false);
     setError(false);
-
     // check if user already exist
     const userExist = users.find(
       (u: User) => u.email === user.email || u.username === user.username
@@ -202,6 +202,7 @@ const AddUser = ({ refetchData }: any) => {
                           value={user.role}
                           className="h-10 w-96 border mt-2 px-2 py-2 border-gray-300 text-gray-900 text-sm rounded-lg   focus:outline-none focus:bg-white focus:border-pink-500 block"
                         >
+                          <option value="">Select Role</option>
                           {roles.map((role: any, idx: number) => (
                             <option key={idx}>{role.name}</option>
                           ))}

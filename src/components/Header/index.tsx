@@ -3,7 +3,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { BellIcon } from "@heroicons/react/24/solid";
-import { User } from "../../model/user.model";
 
 type PropType = {
   show: boolean;
@@ -101,9 +100,10 @@ export default function Header({ toggle }: PropType) {
           <div className="rounded-[50%] bg-secondary-100 w-8 h-8 my-auto mx-2 flex">
             <h2 className="m-auto text-sm font-bold">{userInitials}</h2>
           </div>
-          <h2 className="p-1.5 rounded-[3px] mx-auto text-gray-500 font-[600] text-sm whitespace-nowrap cursor-pointer">
-            {userName}
-          </h2>
+          <div className="p-1.5 rounded-[3px] mx-auto text-gray-500 font-[600] text-sm whitespace-nowrap cursor-pointer">
+           <h2> {userName}</h2>
+           <div className="text-gray-400 text-xs">{loggedInUser.email}</div>
+          </div>
         </div>
       </div>
     </section>
