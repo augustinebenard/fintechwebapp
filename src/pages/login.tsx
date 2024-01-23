@@ -89,7 +89,7 @@ const Login = () => {
                 </h1>
               </div>
               <div className="mb-auto">
-                <img src={logo2} alt="LoginImage" width={220} height={50} />
+                <img src={logo2} alt="LoginImage" width={140} height={50} />
               </div>
             </div>
             <h1 className="text-[1.4rem] md:text-[2rem] text-gray-500 font-bold">
