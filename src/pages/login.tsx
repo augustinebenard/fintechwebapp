@@ -22,8 +22,6 @@ const Login = () => {
   useEffect(() => {
     localStorage.clear();
   }, []);
-  
-
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({ ...form, [e.target.name]: e?.target?.value });
@@ -35,16 +33,19 @@ const Login = () => {
     if (username === "" || password === "") {
       return toast.error("Please fill in all fields");
     }
-    const user = users.find((user: User) => (user.password === form.password) && (user.username === form.username));
+    const user = users.find(
+      (user: User) =>
+        user.password === form.password && user.username === form.username
+    );
     if (user) {
       dispatch(authActions.login(user));
       router("/app/dashboard");
       if (!toast.isActive(toastId.current)) {
-        return  toastId.current = toast.success("Login Successful");
-        }
+        return (toastId.current = toast.success("Login Successful"));
+      }
     } else {
       if (!toast.isActive(toastId.current)) {
-       return toastId.current = toast.error("Invalid Username or Password");
+        return (toastId.current = toast.error("Invalid Username or Password"));
       }
     }
   };
@@ -94,6 +95,28 @@ const Login = () => {
             <p className="text-[.8rem] md:text-[1rem] text-gray-300">
               Enter your credentials to login in to your account
             </p>
+            <div className="text-gray-500">
+              {/* use default login credentials */}
+              <p className="text-[.6rem] italic md:text-[.8rem] text-gray-900 my-2">
+                Default Admin Login Credentials:{" "}
+                <span className="text-purple-600 font-bold">
+                  {"{Username: Austin}"}
+                </span>{" "}
+                <span className="text-purple-800 font-bold">
+                  {"{Password: 123456}"}
+                </span>
+              </p>
+
+              <p className="text-[.6rem] italic md:text-[.8rem] text-gray-900 my-2">
+                Default User Login Credentials:{" "}
+                <span className="text-green-600 font-bold">
+                  {"{Username: TestUser}"}
+                </span>{" "}
+                <span className="text-green-800 font-bold">
+                  {"{Password: 123456}"}
+                </span>
+              </p>
+            </div>
             <form
               className="py-2 m-auto"
               autoComplete="new-password"

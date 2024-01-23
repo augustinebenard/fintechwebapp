@@ -32,7 +32,7 @@
 {
     id: '9b1deb4d-3b7d-4bad-9bdd-2b03dcb6d',
     name: "Sammy James",
-    username: "sammy",
+    username: "TestUser",
     email: "samyjames@gmail.com",
     password: "123456",
     role: "User",
