@@ -36,7 +36,7 @@
     email: "samyjames@gmail.com",
     password: "123456",
     role: "User",
-    active: false,
+    active: true,
     createdAt: "2024-01-01",
     accountNumber: "1234567890",
     walletBalance: 2700,

@@ -5,9 +5,11 @@ import { UserPlusIcon } from "@heroicons/react/24/solid";
 import { useState } from "react";
 import AddUser from "../components/Modal/addUser";
 import { PencilSquareIcon, TrashIcon } from "@heroicons/react/20/solid";
-import { deleteUser } from "../redux/userList.slice";
+import { deleteUser, disableOrEnableUser } from "../redux/userList.slice";
 import { User } from "../model/user.model";
 import { toast } from "react-toastify";
+import Toggle from "react-toggle";
+import "react-toggle/style.css";
 
 const UserManagement = () => {
   const users = useSelector((state: any) => state.users);
@@ -26,6 +28,22 @@ const UserManagement = () => {
     }
     dispatch(deleteUser({ id }));
     toast.success("User deleted successfully");
+  };
+
+  const disableOrEnableUserAction = (e: any, id: string) => {
+    e.preventDefault();
+    const userToUpdateStatus = users.find((user: any) => user.id === id);
+
+    if (id === user?.id) {
+      return toast.error("You cannot disable yourself");
+    }
+    const newUser = {
+      ...userToUpdateStatus,
+      active: !userToUpdateStatus.active,
+    };
+    dispatch(disableOrEnableUser(newUser));
+    toast.success(`
+    User ${userToUpdateStatus.active ? "disabled" : "enabled"} successfully`);
   };
 
   return (
@@ -119,15 +137,17 @@ const UserManagement = () => {
                           </td>
 
                           <td className="whitespace-nowrap px-3 py-4 text-xs text-surfaceVariant-neutral30">
-                            {request.active ? (
-                              <div className="text-green-600 font-semibold">
-                                Active
-                              </div>
-                            ) : (
-                              <div className="text-red-600 font-semibold">
-                                Inactive
-                              </div>
-                            )}
+                            <label>
+                              <span className="sr-only">toggle</span>
+                              <Toggle
+                                disabled={request.id === loggedInUser?.id}
+                                defaultChecked={request.active}
+                                icons={false}
+                                onChange={(e) =>
+                                  disableOrEnableUserAction(e, request.id)
+                                }
+                              />
+                            </label>
                           </td>
                           <td className="whitespace-nowrap px-3 py-4 text-xs text-surfaceVariant-neutral30">
                             <div className="flex items-center space-x-2">

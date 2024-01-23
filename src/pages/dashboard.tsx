@@ -3,6 +3,8 @@ import { useSelector } from "react-redux";
 import { moneySaved2 as moneybag } from "../assets/images";
 import {
   ClipboardDocumentCheckIcon,
+  ClipboardDocumentIcon,
+  ClockIcon,
   UserPlusIcon,
 } from "@heroicons/react/24/solid";
 import Button from "../components/Button";
@@ -11,6 +13,8 @@ import { User } from "../model/user.model";
 import FundWallet from "../components/Modal/fundWallet";
 import TransferFund from "../components/Modal/transferFund";
 import AddUser from "../components/Modal/addUser";
+import { toast } from "react-toastify";
+import { useState } from "react";
 
 const Dashboard = () => {
   const users = useSelector((state: any) => state.users);
@@ -25,13 +29,44 @@ const Dashboard = () => {
     if (!amount) return "0.00";
     return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ".00";
   };
+const copyToClipboard = (e:any, data:any) => {
+    e.preventDefault();
+    navigator.clipboard.writeText(data);
+    toast.success("Copied to clipboard");
+}
+
+// create a dashboard time component that shows the date and current time with seconds
+const DashboardTime = () => {
+
+  const [date, setDate] = useState(new Date());
+
+  setInterval(() => {
+    setDate(new Date());
+  }, 1000);
+
+  return (
+    <div className="text-secondary-400 font-bold">
+      {date.toLocaleDateString()} - {date.toLocaleTimeString()}
+    </div>
+  )
+
+}
+
+
 
   return (
     <div className="px-6 py-4">
+      <div className="flex justify-between">
       <h1 className="text-4xl mb-7 font-bold">
         Welcome Back,{" "}
         <span className="text-primary-800">{loggedInUser.name}</span>
       </h1>
+      <div className="ml-auto space-x-2 flex items-center">
+        <ClockIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
+        <span className="text-gray-400"><DashboardTime/></span>
+      </div>
+
+      </div>
 
       <div className="grid grid-cols-1 xs:grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-5">
         <div className="p-6 bg-white border border-primary-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
@@ -79,8 +114,9 @@ const Dashboard = () => {
               </div>
             </div>
 
-            <ClipboardDocumentCheckIcon
-              className="h-5 w-5"
+            <ClipboardDocumentIcon 
+            onClick={(e) => copyToClipboard(e, loggedInUser.accountNumber)} 
+              className="h-5 w-5 cursor-pointer"
               aria-hidden="true"
             />
           </div>

@@ -57,8 +57,6 @@ const FundWallet = () => {
     };
 
     dispatch(fundUserWallet(newUser));
-    // dispatch(setLoggedInUserData(newUser));
-    // dispatch(authActions.updateLoggedInUser(newUser));
     setSuccess(true);
     setSuccessMessage({
       type: "Success",

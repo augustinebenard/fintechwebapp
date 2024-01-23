@@ -38,6 +38,9 @@ const Login = () => {
         user.password === form.password && user.username === form.username
     );
     if (user) {
+      if(user.active === false) {
+        return toast.error("Your account has been disabled. Please contact the admin");
+      }
       dispatch(authActions.login(user));
       router("/app/dashboard");
       if (!toast.isActive(toastId.current)) {
