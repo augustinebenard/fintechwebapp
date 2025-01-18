@@ -2,7 +2,15 @@
 
 ![image](https://github.com/augustinebenard/fintechwebapp/assets/59481797/50b99518-6c90-44b6-b2e2-15558a0d2b0c)
 
-DEMO VIDEO IS AVAILABLE HERE:  [Fintech Web - 23 January 2024 - Watch Video](https://www.loom.com/share/d8443c8a551c4b7585c555ed600c1b7b).
+DEMO VIDEO IS AVAILABLE HERE:  [User Management Dashboard - 18 January 2025 - Watch Video](https://www.loom.com/share/d8443c8a551c4b7585c555ed600c1b7b).
+<div>
+    <a href="https://www.loom.com/share/db3c2d79e6ef432bb9dc4d87d403c73f">
+      <p>Library | Loom - 18 January 2025 - Watch Video</p>
+    </a>
+    <a href="https://www.loom.com/share/db3c2d79e6ef432bb9dc4d87d403c73f">
+      <img style="max-width:300px;" src="https://cdn.loom.com/sessions/thumbnails/db3c2d79e6ef432bb9dc4d87d403c73f-ff728357ed106d2f-full-play.gif">
+    </a>
+  </div>
 
 ## TASK
 []: # (DOCUMENTATION COMMENT)
